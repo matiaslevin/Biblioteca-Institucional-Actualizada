@@ -364,7 +364,20 @@ function abrirModalAgregar(){
 
     mostrarModal();
 }
+/* Actualiza el minimo permitido en "fecha de devolucion" segun la "fecha de prestamo" elegida */
 
+document.getElementById("input-fecha-prestamo").addEventListener("change", function(){
+
+    const fechaDevolucion = document.getElementById("input-fecha-devolucion");
+
+    fechaDevolucion.min = this.value;
+
+    // Si ya habia una fecha de devolucion invalida, la limpia
+    if(fechaDevolucion.value && fechaDevolucion.value < this.value){
+        fechaDevolucion.value = "";
+    }
+
+});
 
 function abrirModalEditar(boton){
 
@@ -384,7 +397,11 @@ function abrirModalEditar(boton){
     document.getElementById("input-fecha-prestamo").value = fechaTablaAFechaInput(celdas[7].textContent.trim());
     document.getElementById("input-fecha-devolucion").value = fechaTablaAFechaInput(celdas[8].textContent.trim());
 
+    // Actualiza el minimo de la fecha de devolucion segun la fecha de prestamo cargada
+    document.getElementById("input-fecha-devolucion").min = document.getElementById("input-fecha-prestamo").value;
+
     const estadoActual = celdas[9].querySelector(".estado-toggle");
+    
     aplicarEstado(document.getElementById("input-estado"), estadoActual.classList.contains("entregado"));
 
     document.getElementById("input-comentario").value = celdas[10].textContent.trim();
@@ -440,6 +457,9 @@ function limpiarFormulario(){
     document.getElementById("form-prestamo").reset();
 
     aplicarEstado(document.getElementById("input-estado"), false);
+
+    // Reinicia el minimo de la fecha de devolucion al limpiar el formulario
+    document.getElementById("input-fecha-devolucion").min = "";
 }
 
 
@@ -462,6 +482,14 @@ document.getElementById("form-prestamo").addEventListener("submit", function(eve
     if(!rut || !nombre || !curso || !libro || !editorial || !encargado || !serie || !fechaPrestamo || !fechaDevolucion){
 
         alert("Por favor completa todos los campos obligatorios antes de guardar.");
+
+        return;
+    }
+
+    // Validar que la fecha de devolucion no sea anterior a la de prestamo
+    if(new Date(fechaDevolucion) < new Date(fechaPrestamo)){
+
+        alert("La fecha de devolucion no puede ser anterior a la fecha de prestamo.");
 
         return;
     }
