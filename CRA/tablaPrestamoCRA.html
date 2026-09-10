@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="imagenes/logo2.png" type="image/x-icon">
+<title>Administracion Biblioteca - Prestamos</title>
+
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+<link rel="stylesheet" href="tablaPrestamoCRA.css">
+<script src="data/transiciones.js"></script>
+
+<style>
+
+    .table-container{
+        padding: 15px !important;
+    }
+
+    table.table th,
+    table.table td{
+        padding: 8px !important;
+        font-size: 12px !important;
+    }
+
+    .estado-toggle{
+        min-width: 90px;
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+
+    .editar-btn,
+    .eliminar-btn{
+        width: 26px;
+        height: 26px;
+        font-size: 12px;
+    }
+
+    .acciones{
+        gap: 4px;
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<header class="top-bar">
+
+    <div class="top-bar-content">
+
+        <img
+            src="imagenes/logo2.png"
+            alt="Logo"
+            class="top-logo"
+        >
+
+        <h2>
+            SISTEMA DE BIBLIOTECA DIGITAL INSTITUCIONAL
+        </h2>
+
+    </div>
+
+    <button id="theme-button" class="theme-switch btn btn-outline-light">
+        ☀️/🌙
+    </button>
+
+</header>
+
+<div class="page-container container-fluid">
+
+    <div class="header-section">
+
+        <a href="tablaBibliotecaCRA.html" class="btn-volver btn btn-primary">
+            Volver
+        </a>
+
+        <div class="title-container">
+
+            <h1>
+                Registro de Prestamos
+            </h1>
+
+            <p>
+                Control y seguimiento de libros prestados
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="buttons-container">
+
+        <button class="btn btn-success" onclick="abrirModalAgregar()">
+            Agregar prestamo
+        </button>
+
+    </div>
+
+    <div class="table-container shadow">
+
+        <table class="table table-bordered align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>Rut</th>
+                    <th>Nombre</th>
+                    <th>Curso</th>
+                    <th>Nombre del libro</th>
+                    <th>Editorial</th>
+                    <th>Encargado</th>
+                    <th>Serie / N° Identificador</th>
+                    <th style="white-space: nowrap;">Fecha de prestamo</th>
+                    <th style="white-space: nowrap;">Fecha de devolucion</th>
+                    <th>Estado</th>
+                    <th>Comentario</th>
+                    <th>Acciones</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="tabla-prestamos">
+
+                <tr>
+
+                    <td>12.345.678-9</td>
+
+                    <td>Matias Levin Godoy</td>
+
+                    <td>4°B</td>
+
+                    <td>Five Nights at Freddy's: Los ojos de plata</td>
+
+                    <td>Editorial Andes</td>
+
+                    <td>Patricia Flores</td>
+
+                    <td>H1-003</td>
+
+                    <td style="white-space: nowrap;">05-11-2025</td>
+
+                    <td style="white-space: nowrap;">19-11-2025</td>
+
+                    <td class="estado-celda">
+                        <button class="estado-toggle no-entregado" disabled>
+                            No entregado
+                        </button>
+                    </td>
+
+                    <td>Sin observaciones</td>
+
+                    <td class="acciones">
+
+                        <button class="btn btn-warning btn-sm editar-btn" onclick="abrirModalEditar(this)">
+                            ✏️
+                        </button>
+
+                        <button class="btn btn-danger btn-sm eliminar-btn">
+                            🗑️
+                        </button>
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>22.555.465-K</td>
+
+                    <td>Angelo Godoy</td>
+
+                    <td>4°B</td>
+
+                    <td>Prisma</td>
+
+                    <td>Editorial Sur</td>
+
+                    <td>Sandra Jara</td>
+
+                    <td>H1-014</td>
+
+                    <td style="white-space: nowrap;">20-10-2025</td>
+
+                    <td style="white-space: nowrap;">03-11-2025</td>
+
+                    <td class="estado-celda">
+                        <button class="estado-toggle entregado" disabled>
+                            Entregado
+                        </button>
+                    </td>
+
+                    <td>Portada con leve daño</td>
+
+                    <td class="acciones">
+
+                        <button class="btn btn-warning btn-sm editar-btn" onclick="abrirModalEditar(this)">
+                            ✏️
+                        </button>
+
+                        <button class="btn btn-danger btn-sm eliminar-btn">
+                            🗑️
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<div id="modal-overlay" class="modal-overlay">
+
+    <div class="modal-box">
+
+        <h3 id="modal-titulo">Agregar prestamo</h3>
+
+        <form id="form-prestamo">
+
+            <div class="form-group">
+                <label for="input-rut">Rut</label>
+                <input type="text" id="input-rut" placeholder="Ej: 12.345.678-9" required>
+            </div>
+
+            <div class="form-group">
+                <label for="input-nombre">Nombre</label>
+                <input type="text" id="input-nombre" placeholder="Nombre completo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="input-curso">Curso</label>
+                <input type="text" id="input-curso" placeholder="Ej: 4°A" required>
+            </div>
+
+            <div class="form-group">
+                <label for="input-libro">Nombre del libro</label>
+                <input type="text" id="input-libro" placeholder="Titulo del libro" required>
+            </div>
+
+            <div class="form-group">
+                <label for="input-editorial">Editorial</label>
+                <input type="text" id="input-editorial" placeholder="Editorial" required>
+            </div>
+
+            <div class="form-group">
+                <label for="input-encargado">Encargado de prestar el libro</label>
+                <input type="text" id="input-encargado" placeholder="Nombre del encargado" required>
+            </div>
+
+            <div class="form-group">
+                <label for="input-serie">Serie o N° identificador</label>
+                <input type="text" id="input-serie" placeholder="Ej: H1-003" required>
+            </div>
+
+            <div class="form-group">
+                <label for="input-fecha-prestamo">Fecha de prestamo</label>
+                <input type="date" id="input-fecha-prestamo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="input-fecha-devolucion">Fecha de devolucion</label>
+                <input type="date" id="input-fecha-devolucion" required>
+            </div>
+
+            <div class="form-group">
+
+                <label>Estado</label>
+
+                <div>
+                    <button type="button" id="input-estado" class="estado-toggle no-entregado" onclick="toggleEstadoModal()">
+                        No entregado
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="input-comentario">Comentario</label>
+                <textarea id="input-comentario" rows="3" placeholder="Detalles del libro (opcional)"></textarea>
+            </div>
+
+            <div class="modal-buttons">
+
+                <button type="button" class="btn btn-secondary" onclick="cerrarModal()">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="btn btn-success">
+                    Guardar
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+const body = document.body;
+
+if(localStorage.getItem("modo") === "oscuro"){
+    body.classList.add("dark-mode");
+}
+
+
+document.getElementById("theme-button").addEventListener("click", () => {
+
+    body.classList.toggle("dark-mode");
+
+    if(body.classList.contains("dark-mode")){
+        localStorage.setItem("modo", "oscuro");
+    }
+    else{
+        localStorage.setItem("modo", "claro");
+    }
+
+});
+
+
+let filaEnEdicion = null;
+
+
+function fechaTablaAFechaInput(fechaTabla){
+
+    const partes = fechaTabla.split("-");
+
+    if(partes.length !== 3) return "";
+
+    return `${partes[2]}-${partes[1]}-${partes[0]}`;
+}
+
+
+function fechaInputAFechaTabla(fechaInput){
+
+    const partes = fechaInput.split("-");
+
+    if(partes.length !== 3) return "";
+
+    return `${partes[2]}-${partes[1]}-${partes[0]}`;
+}
+
+
+function abrirModalAgregar(){
+
+    filaEnEdicion = null;
+
+    document.getElementById("modal-titulo").textContent = "Agregar prestamo";
+
+    limpiarFormulario();
+
+    mostrarModal();
+}
+
+
+function abrirModalEditar(boton){
+
+    filaEnEdicion = boton.closest("tr");
+
+    document.getElementById("modal-titulo").textContent = "Editar prestamo";
+
+    const celdas = filaEnEdicion.querySelectorAll("td");
+
+    document.getElementById("input-rut").value = celdas[0].textContent.trim();
+    document.getElementById("input-nombre").value = celdas[1].textContent.trim();
+    document.getElementById("input-curso").value = celdas[2].textContent.trim();
+    document.getElementById("input-libro").value = celdas[3].textContent.trim();
+    document.getElementById("input-editorial").value = celdas[4].textContent.trim();
+    document.getElementById("input-encargado").value = celdas[5].textContent.trim();
+    document.getElementById("input-serie").value = celdas[6].textContent.trim();
+    document.getElementById("input-fecha-prestamo").value = fechaTablaAFechaInput(celdas[7].textContent.trim());
+    document.getElementById("input-fecha-devolucion").value = fechaTablaAFechaInput(celdas[8].textContent.trim());
+
+    const estadoActual = celdas[9].querySelector(".estado-toggle");
+    aplicarEstado(document.getElementById("input-estado"), estadoActual.classList.contains("entregado"));
+
+    document.getElementById("input-comentario").value = celdas[10].textContent.trim();
+
+    mostrarModal();
+}
+
+
+function toggleEstadoModal(){
+
+    const boton = document.getElementById("input-estado");
+
+    aplicarEstado(boton, !boton.classList.contains("entregado"));
+}
+
+
+function aplicarEstado(boton, entregado){
+
+    if(entregado){
+
+        boton.classList.remove("no-entregado");
+        boton.classList.add("entregado");
+
+        boton.textContent = "Entregado";
+    }
+    else{
+
+        boton.classList.remove("entregado");
+        boton.classList.add("no-entregado");
+
+        boton.textContent = "No entregado";
+    }
+
+}
+
+
+function mostrarModal(){
+
+    document.getElementById("modal-overlay").classList.add("activo");
+}
+
+
+function cerrarModal(){
+
+    document.getElementById("modal-overlay").classList.remove("activo");
+
+    filaEnEdicion = null;
+}
+
+
+function limpiarFormulario(){
+
+    document.getElementById("form-prestamo").reset();
+
+    aplicarEstado(document.getElementById("input-estado"), false);
+}
+
+
+document.getElementById("form-prestamo").addEventListener("submit", function(evento){
+
+    evento.preventDefault();
+
+    const rut = document.getElementById("input-rut").value.trim();
+    const nombre = document.getElementById("input-nombre").value.trim();
+    const curso = document.getElementById("input-curso").value.trim();
+    const libro = document.getElementById("input-libro").value.trim();
+    const editorial = document.getElementById("input-editorial").value.trim();
+    const encargado = document.getElementById("input-encargado").value.trim();
+    const serie = document.getElementById("input-serie").value.trim();
+    const fechaPrestamo = document.getElementById("input-fecha-prestamo").value.trim();
+    const fechaDevolucion = document.getElementById("input-fecha-devolucion").value.trim();
+    const entregado = document.getElementById("input-estado").classList.contains("entregado");
+    const comentario = document.getElementById("input-comentario").value.trim();
+
+    if(!rut || !nombre || !curso || !libro || !editorial || !encargado || !serie || !fechaPrestamo || !fechaDevolucion){
+
+        alert("Por favor completa todos los campos obligatorios antes de guardar.");
+
+        return;
+    }
+
+    const datos = {
+        rut, nombre, curso, libro, editorial, encargado, serie,
+        fechaPrestamo: fechaInputAFechaTabla(fechaPrestamo),
+        fechaDevolucion: fechaInputAFechaTabla(fechaDevolucion),
+        entregado, comentario
+    };
+
+    if(filaEnEdicion){
+        actualizarFila(filaEnEdicion, datos);
+    }
+    else{
+        crearFila(datos);
+    }
+
+    cerrarModal();
+});
+
+
+function actualizarFila(fila, datos){
+
+    const celdas = fila.querySelectorAll("td");
+
+    celdas[0].textContent = datos.rut;
+    celdas[1].textContent = datos.nombre;
+    celdas[2].textContent = datos.curso;
+    celdas[3].textContent = datos.libro;
+    celdas[4].textContent = datos.editorial;
+    celdas[5].textContent = datos.encargado;
+    celdas[6].textContent = datos.serie;
+    celdas[7].textContent = datos.fechaPrestamo;
+    celdas[8].textContent = datos.fechaDevolucion;
+
+    aplicarEstado(celdas[9].querySelector(".estado-toggle"), datos.entregado);
+
+    celdas[10].textContent = datos.comentario || "Sin comentario";
+}
+
+
+function crearFila(datos){
+
+    const tabla = document.getElementById("tabla-prestamos");
+
+    const fila = document.createElement("tr");
+
+    fila.innerHTML = `
+
+        <td>${datos.rut}</td>
+
+        <td>${datos.nombre}</td>
+
+        <td>${datos.curso}</td>
+
+        <td>${datos.libro}</td>
+
+        <td>${datos.editorial}</td>
+
+        <td>${datos.encargado}</td>
+
+        <td>${datos.serie}</td>
+
+        <td style="white-space: nowrap;">${datos.fechaPrestamo}</td>
+
+        <td style="white-space: nowrap;">${datos.fechaDevolucion}</td>
+
+        <td class="estado-celda">
+            <button class="estado-toggle" disabled></button>
+        </td>
+
+        <td>${datos.comentario || "Sin comentario"}</td>
+
+        <td class="acciones">
+
+            <button class="btn btn-warning btn-sm editar-btn" onclick="abrirModalEditar(this)">
+                ✏️
+            </button>
+
+            <button class="btn btn-danger btn-sm eliminar-btn">
+                🗑️
+            </button>
+
+        </td>
+
+    `;
+
+    tabla.appendChild(fila);
+
+    aplicarEstado(fila.querySelector(".estado-toggle"), datos.entregado);
+
+    agregarEventosEliminar();
+}
+
+
+function agregarEventosEliminar(){
+
+    const botonesEliminar = document.querySelectorAll(".eliminar-btn");
+
+    botonesEliminar.forEach(boton => {
+
+        boton.onclick = function(){
+
+            this.closest("tr").remove();
+
+        };
+
+    });
+
+}
+
+
+document.getElementById("modal-overlay").addEventListener("click", function(evento){
+
+    if(evento.target === this){
+        cerrarModal();
+    }
+
+});
+
+
+agregarEventosEliminar();
+
+</script>
+
+</body>
+</html>

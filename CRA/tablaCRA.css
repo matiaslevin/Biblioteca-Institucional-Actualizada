@@ -1,0 +1,410 @@
+:root{
+
+    --bg-page: #eef2f5;
+    --bg-card: #ffffff;
+
+    --topbar: #102a43;
+
+    --title-color: #c9a227;
+
+    --text-main: #1f2933;
+    --text-soft: #6b7280;
+
+    --border: #d1d9e0;
+
+    --table-row: #f8fafc;
+
+    --hover: #f1f5f9;
+}
+
+body.dark-mode{
+
+    --bg-page: #0b1220;
+    --bg-card: #111827;
+
+    --topbar: #0f172a;
+
+    --title-color: #ffffff;
+
+    --text-main: #f3f4f6;
+    --text-soft: #9ca3af;
+
+    --border: #374151;
+
+    --table-row: #1f2937;
+
+    --hover: #273244;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body{
+
+    background: var(--bg-page);
+
+    transition: 0.3s ease;
+    
+    animation: aparecerPagina 0.25s ease forwards;
+}
+
+@keyframes aparecerPagina{
+
+    from{
+        opacity: 0;
+    }
+
+    to{
+        opacity: 1;
+    }
+
+}
+
+body.pagina-saliendo{
+
+    animation: none;
+
+    opacity: 0;
+
+    transition: opacity 0.25s ease;
+}
+
+
+
+
+.top-bar{
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 72px;
+
+    background: var(--topbar);
+
+    border-bottom: 4px solid var(--title-color);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.top-bar-content{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 16px;
+}
+
+.top-logo{
+
+    position: absolute;
+
+    left: 20px;
+
+    width: 48px;
+    height: 48px;
+
+    object-fit: contain;
+}
+
+.top-bar h2{
+
+    color: var(--title-color);
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+.theme-switch{
+
+    position: absolute;
+
+    right: 20px;
+}
+
+.page-container{
+
+    width: 100%;
+
+    max-width: 1400px;
+
+    margin: auto;
+
+    padding-top: 120px;
+
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.header-section{
+
+    position: relative;
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 35px;
+}
+
+.btn-volver{
+
+    padding: 12px 20px;
+}
+
+.title-container{
+
+    position: absolute;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    text-align: center;
+}
+
+.title-container h1{
+
+    color: var(--text-main);
+
+    font-size: 28px;
+
+    margin-bottom: 8px;
+}
+
+.title-container p{
+
+    color: var(--text-soft);
+
+    font-size: 14px;
+}
+
+.buttons-container{
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-bottom: 25px;
+}
+
+/* Buscador de la tabla CRA */
+
+.search-bar-cra{
+
+    display: flex;
+    justify-content: center;
+
+    margin-bottom: 20px;
+}
+
+.search-bar-cra .search-box{
+
+    width: 100%;
+    max-width: 500px;
+}
+
+.search-bar-cra .form-control{
+
+    padding: 12px 16px;
+
+    background: var(--bg-card);
+
+    color: var(--text-main);
+
+    border: 1px solid var(--border);
+
+    box-shadow: none;
+}
+
+.search-bar-cra .input-group-text{
+
+    background: var(--bg-card);
+
+    border: 1px solid var(--border);
+
+    color: var(--text-soft);
+}
+
+.sin-resultados{
+
+    text-align: center;
+
+    color: var(--text-soft);
+
+    font-size: 14px;
+
+    padding: 20px 0 0 0;
+}
+
+.table-container{
+
+    background: var(--bg-card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    overflow-x: auto;
+
+    padding: 35px;
+}
+
+table{
+
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+th{
+
+    background: var(--topbar) !important;
+
+    color: white !important;
+
+    padding: 16px !important;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    border: 1px solid var(--border) !important;
+}
+
+td{
+
+    padding: 15px !important;
+
+    text-align: center;
+
+    border: 1px solid var(--border) !important;
+
+    background: var(--table-row) !important;
+
+    color: var(--text-main) !important;
+
+    transition: 0.3s;
+}
+
+tr:hover td{
+
+    background: var(--hover) !important;
+}
+
+td[contenteditable="true"]:focus{
+
+    outline: 2px solid #3b82f6;
+
+    background: #dbeafe !important;
+}
+
+/* Celdas bloqueadas (no se pueden tocar hasta presionar el lapiz) */
+
+.celda-editable{
+
+    cursor: default;
+}
+
+/* Fila en modo edicion (lapiz activado) */
+
+tr.fila-editando td.celda-editable{
+
+    background: #fef9c3 !important;
+
+    cursor: text;
+}
+
+body.dark-mode tr.fila-editando td.celda-editable{
+
+    background: #3f3a1a !important;
+}
+
+.acciones{
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-direction: row;
+}
+
+.editar-btn,
+.eliminar-btn{
+
+    width: 32px;
+
+    height: 32px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 0;
+
+    font-size: 14px;
+}
+
+@media screen and (max-width: 900px){
+
+    .header-section{
+
+        flex-direction: column;
+
+        gap: 20px;
+    }
+
+    .title-container{
+
+        position: static;
+
+        transform: none;
+    }
+
+    .top-bar h2{
+
+        font-size: 14px;
+
+        text-align: center;
+    }
+
+    .table-container{
+
+        padding: 15px;
+    }
+
+    th,
+    td{
+
+        font-size: 12px;
+    }
+
+}

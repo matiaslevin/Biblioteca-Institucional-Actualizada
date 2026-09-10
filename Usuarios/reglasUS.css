@@ -1,0 +1,441 @@
+:root{
+
+    --bg-page: #eef2f5;
+    --bg-card: #ffffff;
+
+    --topbar: #102a43;
+
+    --title-color: #c9a227;
+
+    --text-main: #1f2933;
+    --text-soft: #6b7280;
+
+    --border: #d1d9e0;
+
+    --hover: #f3f4f6;
+}
+
+body.dark-mode{
+
+    --bg-page: #0b1220;
+    --bg-card: #111827;
+
+    --topbar: #0f172a;
+
+    --title-color: #ffffff;
+
+    --text-main: #f3f4f6;
+    --text-soft: #9ca3af;
+
+    --border: #374151;
+
+    --hover: #1f2937;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body{
+
+    background: var(--bg-page);
+
+    transition: 0.3s ease;
+
+    animation: aparecerPagina 0.25s ease forwards;
+}
+
+@keyframes aparecerPagina{
+
+    from{
+        opacity: 0;
+    }
+
+    to{
+        opacity: 1;
+    }
+
+}
+
+body.pagina-saliendo{
+
+    animation: none;
+
+    opacity: 0;
+
+    transition: opacity 0.25s ease;
+}
+
+/* Barra superior (misma estructura que el resto del sitio) */
+
+.top-bar{
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 72px;
+
+    background: var(--topbar);
+
+    border-bottom: 4px solid var(--title-color);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.top-bar-content{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 16px;
+}
+
+.top-logo{
+
+    position: absolute;
+
+    left: 20px;
+
+    width: 48px;
+    height: 48px;
+
+    object-fit: contain;
+}
+
+.top-bar h2{
+
+    color: var(--title-color);
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+/* Contenedor */
+
+.page-container{
+
+    padding-top: 110px;
+    padding-bottom: 60px;
+
+    width: 100%;
+    max-width: 900px;
+
+    margin: auto;
+}
+
+/* Encabezado de bienvenida (mismo estilo que index.html) */
+
+.welcome-section{
+
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+.welcome-section h1{
+
+    color: var(--text-main);
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    margin-bottom: 8px;
+}
+
+.welcome-section p{
+
+    color: var(--text-soft);
+
+    font-size: 15px;
+}
+
+/* Contenido */
+
+.main-content{
+
+    display: flex;
+    justify-content: center;
+}
+
+/* Tarjeta de reglas (mismo patron que .card-categorias) */
+
+.card-reglas{
+
+    width: 100%;
+
+    background: var(--bg-card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    overflow: hidden;
+}
+
+/* Header de la tarjeta (identico a .header-categorias del menu) */
+
+.header-categorias{
+
+    background: var(--topbar);
+
+    color: white;
+
+    text-align: center;
+
+    padding: 18px;
+
+    font-size: 18px;
+
+    font-weight: 600;
+}
+
+/* Lista de reglas */
+
+.lista-reglas{
+
+    list-style: none;
+}
+
+.lista-reglas .list-group-item{
+
+    background: var(--bg-card);
+
+    border-color: var(--border);
+
+    padding: 18px 25px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    transition: 0.3s;
+}
+
+.lista-reglas .list-group-item:hover{
+
+    background: var(--hover);
+}
+
+/* Regla destacada (biblioteca digital) */
+
+.regla-destacada{
+
+    background: rgba(201, 162, 39, 0.08) !important;
+
+    border-left: 4px solid var(--title-color) !important;
+}
+
+/* Numero de la regla */
+
+.numero-regla{
+
+    flex-shrink: 0;
+
+    width: 30px;
+    height: 30px;
+
+    border-radius: 50%;
+
+    background: var(--topbar);
+
+    color: var(--title-color);
+
+    font-weight: 700;
+
+    font-size: 14px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+/* Icono de la regla */
+
+.icono-regla{
+
+    flex-shrink: 0;
+
+    font-size: 18px;
+
+    line-height: 30px;
+}
+
+/* Texto de la regla */
+
+.texto-regla{
+
+    color: var(--text-main);
+
+    font-size: 15px;
+
+    line-height: 1.5;
+
+    padding-top: 3px;
+}
+
+/* Boton de regreso a la categoria (mismo estilo que .btn-volver del resto del sitio) */
+
+.boton-regreso-container{
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 35px;
+}
+
+.btn-categoria{
+
+    background: #102a43;
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 14px 28px;
+
+    border-radius: 5px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.5px;
+
+    border: none;
+
+    transition: 0.3s;
+}
+
+.btn-categoria:hover{
+
+    background: #1d4d72;
+
+    color: white;
+
+    transform: translateY(-2px);
+}
+
+/* Boton de cambiar modo (identico al resto del sitio) */
+
+/* Botón de cambiar modo */
+.theme-floating {
+    position: fixed !important;
+    right: 20px !important;
+    bottom: 20px !important;
+
+    width: 55px;
+    height: 55px;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border-radius: 50%;
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+    line-height: 1;
+
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+    z-index: 9999;
+}
+
+.theme-floating:hover {
+    transform: scale(0.90);
+}
+
+/* MEDIA — responsive para tablet y celular */
+
+@media screen and (max-width: 900px){
+
+    .top-bar{
+
+        height: auto;
+
+        padding: 15px;
+    }
+
+    .top-bar h2{
+
+        font-size: 13px;
+
+        text-align: center;
+
+        padding: 0 70px;
+    }
+
+    .top-logo{
+
+        width: 40px;
+        height: 40px;
+
+        left: 10px;
+    }
+
+    .welcome-section h1{
+
+        font-size: 22px;
+    }
+
+    .page-container{
+
+        max-width: 95%;
+    }
+
+    .lista-reglas .list-group-item{
+
+        padding: 14px 16px;
+
+        gap: 10px;
+    }
+
+    .texto-regla{
+
+        font-size: 14px;
+    }
+
+    .numero-regla{
+
+        width: 26px;
+        height: 26px;
+
+        font-size: 12px;
+    }
+
+    .btn-categoria{
+
+        width: 100%;
+
+        text-align: center;
+
+        padding: 14px;
+    }
+
+}
