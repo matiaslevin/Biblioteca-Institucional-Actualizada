@@ -22,7 +22,7 @@ const LIBROS = [
 
 ];
 
-/* Lista de categorias en orden, con su icono y estante - usada por el menu */
+/* Lista de categorias en orden, con su icono y estante - usada por el menu.       */
 
 const CATEGORIAS = [
     { estante: "H2",  nombre: "Comic y Novela Grafica",          icono: "🦸" },
@@ -34,5 +34,5 @@ const CATEGORIAS = [
     { estante: "H8",  nombre: "Historia, Sociedad y Biografias", icono: "🏛️" },
     { estante: "H9",  nombre: "Arte, Musica y Diseno",           icono: "🎨" },
     { estante: "H10", nombre: "Cuento",                          icono: "📗" },
-    { estante: "H11", nombre: "Teatro",                          icono: "🎭" },
+    { estante: "H11", nombre: "Teatro.",                          icono: "🎭" },
 ];
